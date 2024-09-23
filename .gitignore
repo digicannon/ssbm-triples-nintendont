@@ -10,3 +10,8 @@ loader/data/kernel.zip
 nintendont/boot.dol
 fatfs/*.a
 codehandler/*.h
+
+kernel/triples_codes.h
+loader/loader.dol
+
+.vscode/

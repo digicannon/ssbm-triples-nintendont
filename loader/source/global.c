@@ -207,6 +207,7 @@ void Initialise(bool autoboot)
 
 	if(autoboot == false)
 	{
+		/*
 		for (i=0; i<255; i +=5) // Fade background image in from black screen
 		{
 			if (bg_isWidescreen)
@@ -218,6 +219,7 @@ void Initialise(bool autoboot)
 			GRRLIB_DrawImg(bg_xPos, 0, background, 0, bg_xScale, 1, RGBA(255, 255, 255, i)); // Opacity increases as i does
 			GRRLIB_Render();
 		}
+		*/
 		ClearScreen();
 	}
 	gprintf("Initialize Finished\r\n");
@@ -325,7 +327,7 @@ bool LoadNinCFG(void)
 {
 	bool ConfigLoaded = true;
 	FIL cfg;
-	if (f_open_char(&cfg, "/nincfg.bin", FA_READ|FA_OPEN_EXISTING) != FR_OK)
+	if (f_open_char(&cfg, "/nincfg_triples.bin", FA_READ|FA_OPEN_EXISTING) != FR_OK)
 		return false;
 
 	// Read the configuration file into memory.
@@ -361,6 +363,7 @@ bool LoadNinCFG(void)
 
 inline void ClearScreen()
 {
+	/*
 	if (bg_isWidescreen)
 	{
 		// Clear the sides.
@@ -368,6 +371,8 @@ inline void ClearScreen()
 		GRRLIB_Rectangle(80+480, 0, 80, 480, RGBA(222, 223, 224, 255), true);
 	}
 	GRRLIB_DrawImg(bg_xPos, 0, background, 0, bg_xScale, 1, RGBA(255, 255, 255, 255));
+	*/
+	GRRLIB_Rectangle(0, 0, 640, 480, RGBA(0xDC, 0xDC, 0xDC, 0xFF), true);
 }
 
 static inline char ascii(char s)

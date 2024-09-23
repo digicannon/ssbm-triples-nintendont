@@ -929,7 +929,7 @@ int main(int argc, char **argv)
 
 		// Write config to the boot device, which is loaded on next launch.
 		FIL cfg;
-		if (f_open_char(&cfg, "/nincfg.bin", FA_WRITE|FA_OPEN_ALWAYS) == FR_OK)
+		if (f_open_char(&cfg, "/nincfg_triples.bin", FA_WRITE|FA_OPEN_ALWAYS) == FR_OK)
 		{
 			// Reserve space in the file.
 			if (f_size(&cfg) < sizeof(NIN_CFG)) {
@@ -943,8 +943,8 @@ int main(int argc, char **argv)
 		}
 
 		// Write config to the game device, used by the Nintendont kernel.
-		char ConfigPath[20];
-		snprintf(ConfigPath, sizeof(ConfigPath), "%s:/nincfg.bin", GetRootDevice());
+		char ConfigPath[32];
+		snprintf(ConfigPath, sizeof(ConfigPath), "%s:/nincfg_triples.bin", GetRootDevice());
 		if (f_open_char(&cfg, ConfigPath, FA_WRITE|FA_OPEN_ALWAYS) == FR_OK)
 		{
 			// Reserve space in the file.

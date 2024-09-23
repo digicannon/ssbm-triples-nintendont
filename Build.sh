@@ -1,3 +1,7 @@
 #!/bin/sh
-# This shell script is still here for compatibility reasons.
+
+cd ../ssbm-triples-asm/
+./build_nin.sh
+
+cd ../ssbm-triples-nintendont/
 make forced

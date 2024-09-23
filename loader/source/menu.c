@@ -1359,7 +1359,7 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 					break;
 
 				case NIN_SETTINGS_NATIVE_SI:
-					ncfg->Config ^= (NIN_CFG_NATIVE_SI);
+					//ncfg->Config ^= (NIN_CFG_NATIVE_SI);
 					break;
 
 				default:
@@ -1544,9 +1544,9 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 
 		// Native controllers. (Required for GBA link; disables Bluetooth and USB HID.)
 		// TODO: Gray out on RVL-101?
-		PrintFormat(MENU_SIZE, (IsWiiU() ? DARK_GRAY : BLACK), MENU_POS_X + 50, SettingY(ListLoopIndex),
+		PrintFormat(MENU_SIZE, DARK_GRAY, MENU_POS_X + 50, SettingY(ListLoopIndex),
 			    "%-18s:%-4s", OptionStrings[ListLoopIndex],
-			    (ncfg->Config & (NIN_CFG_NATIVE_SI)) ? "On " : "Off");
+			    "On");
 		ListLoopIndex++;
 
 		/** Right column **/
@@ -1627,7 +1627,7 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 		u32 cursor_color = BLACK;
 		if (ctx->settings.settingPart == 0) {
 			if ((!IsWiiU() && ctx->settings.posX == NIN_CFG_BIT_USB) ||
-			     (IsWiiU() && ctx->settings.posX == NIN_CFG_NATIVE_SI))
+			     (ctx->settings.posX == NIN_CFG_NATIVE_SI))
 			{
 				// Setting is not usable on this platform.
 				// Gray out the cursor, too.
@@ -1963,17 +1963,10 @@ void ShowMessageScreenAndExit(const char *msg, int ret)
 void PrintInfo(void)
 {
 	const char *consoleType = (isWiiVC ? (IsWiiUFastCPU() ? "WiiVC 5x CPU" : "Wii VC") : (IsWiiUFastCPU() ? "WiiU 5x CPU" : (IsWiiU() ? "Wii U" : "Wii")));
-#ifdef NIN_SPECIAL_VERSION
-	// "Special" version with customizations. (Not mainline!)
-	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*0, "Nintendont Loader v%u.%u" NIN_SPECIAL_VERSION " (%s)",
-		    NIN_VERSION>>16, NIN_VERSION&0xFFFF, consoleType);
-#else
-	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*0, "Nintendont Loader v%u.%u (%s)",
-		    NIN_VERSION>>16, NIN_VERSION&0xFFFF, consoleType);
-#endif
+	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*0, "SSBM Triples v0.4.1");
 	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*1, "Built   : " __DATE__ " " __TIME__);
-	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*2, "Firmware: %u.%u.%u",
-		    *(vu16*)0x80003140, *(vu8*)0x80003142, *(vu8*)0x80003143);
+	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*2, "Firmware: %s %u.%u.%u",
+		    consoleType, *(vu16*)0x80003140, *(vu8*)0x80003142, *(vu8*)0x80003143);
 }
 
 /**

@@ -109,6 +109,26 @@ u32 IsN64Emu = 0;
 u32 isKirby = 0;
 u32 isdisneyskt = 0;
 
+// Modified GetMeleeVersion() from Project Slippi.
+static bool is_melee102() {
+	// Grab the revision/version number in case we need to check
+	sync_before_read((void*)0x00000000, 0x20);
+	static u8 *game_version = (u8 *)0x00000007;
+
+	switch(GAME_ID)
+	{
+		// GAL{E,J} v1.02 are both supported!
+		case 0x47414c45: // GALE
+		case 0x47414c4a: // GALJ
+			return *game_version == 2;
+		// Otherwise, this image is not supported!
+		default:
+			return false;
+	}
+
+	return false;
+}
+
 // SHA-1 hashes of known DSP modules.
 static const unsigned char DSPHashes[][20] =
 {
@@ -1656,7 +1676,7 @@ void DoPatches( char *Buffer, u32 Length, u32 DiscOffset )
 		}
 	}
 	DisableEXIPatch = (TRIGame == TRI_NONE && ConfigGetConfig(NIN_CFG_MEMCARDEMU) == false);
-	DisableSIPatch = (!IsWiiU() && TRIGame == TRI_NONE && ConfigGetConfig(NIN_CFG_NATIVE_SI));
+	DisableSIPatch = (!IsWiiU());
 
 	bool PatchWide = ConfigGetConfig(NIN_CFG_FORCE_WIDE);
 	if(PatchWide && PatchStaticWidescreen(TITLE_ID, GAME_ID & 0xFF)) //if further patching is needed
@@ -3828,6 +3848,45 @@ void DoPatches( char *Buffer, u32 Length, u32 DiscOffset )
 	}
 	free(hash);
 	free(SHA1i);
+
+	// Triples patches.
+	if (is_melee102()) {
+		// Boot to CSS.
+		write32(0x001BFA20, 0x38600002);
+
+		const u32 triples_widescreen_enabled = 0x3FC700;
+		if (ConfigGetConfig(NIN_CFG_FORCE_WIDE)) {
+			// Write triples global to enable widescreen.
+			// The triples codes contain the C2 codes that we can't manage as Nintendont.
+			write32(triples_widescreen_enabled, 0x000000EE);
+
+			// These are all taken from Project Slippi.
+			// https://github.com/project-slippi/slippi-ssbm-asm/tree/master/External/Widescreen
+			write32(0x3BB05C, 0x3EB00000); // External/Widescreen/Fix Screen Flash.asm
+			write32(0x4DDB58, 0x3E4CCCCD); // External/Widescreen/Adjust Offscreen Scissor/Adjust Bubble Zoom.asm
+			write32(0x086B24, 0x60000000); // External/Widescreen/Adjust Offscreen Scissor/Draw High Poly Models.asm
+			write32(0x030C7C, 0x38000064); // External/Widescreen/Adjust Offscreen Scissor/Left Camera Bound.asm
+			write32(0x030C88, 0x3800021C); // External/Widescreen/Adjust Offscreen Scissor/Right Camera Bound.asm
+			write32(0x4DDB30, 0x3F666666); // External/Widescreen/Adjust Offscreen Scissor/Fix Bubble Positions/Adjust Corner Value 1.asm
+			write32(0x4DDB34, 0xBF666666); // External/Widescreen/Adjust Offscreen Scissor/Fix Bubble Positions/Adjust Corner Value 2.asm
+			write32(0x4DDB2C, 0xC3660000); // External/Widescreen/Adjust Offscreen Scissor/Fix Bubble Positions/Extend Negative Vertical Bound.asm
+			write32(0x4DDB28, 0x43660000); // External/Widescreen/Adjust Offscreen Scissor/Fix Bubble Positions/Extend Positive Vertical Bound.asm
+			write32(0x4DDB4C, 0x3D916873); // External/Widescreen/Adjust Offscreen Scissor/Fix Bubble Positions/Widen Bubble Region.asm
+			write32(0x4DDB84, 0x3E89FEFA); // External/Widescreen/Nametag Fixes/Adjust Nametag Text X Scale.asm
+		} else {
+			write32(triples_widescreen_enabled, 0);
+		}
+
+		static const u32 triples_codes[] = {
+			#include "triples_codes.h"
+		};
+		static const u32 triples_code_length = sizeof(triples_codes) / 4;
+
+		u32 code_idx;
+		for (code_idx = 0; code_idx < triples_code_length; code_idx += 2) {
+			write32(triples_codes[code_idx], triples_codes[code_idx + 1]);
+		}
+	}
 
 	/*if( ((PatchCount & (1|2|4|8|2048)) != (1|2|4|8|2048)) )
 	{
