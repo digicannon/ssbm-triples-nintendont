@@ -43,7 +43,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ShowGameInfo.h"
 
 // Dark gray for grayed-out menu items.
-#define DARK_GRAY 0x666666FF
+#define DARK_GRAY 0x888888FF
 
 // Device state.
 typedef enum {
@@ -998,16 +998,10 @@ static const char *const *GetSettingsDescription(const MenuCtx *ctx)
 
 			case NIN_SETTINGS_NATIVE_SI: {
 				static const char *desc_native_si[] = {
-					"Native Control allows use of",
-					"GBA link cables on original",
-					"Wii systems.",
+					"Always enabled for Triples.",
 					"",
-					"NOTE: Enabling Native Control",
-					"will disable Bluetooth and",
-					"USB HID controllers.",
-					"",
-					"This option is not available",
-					"on Wii U.",
+					"The USB adapter is instead",
+					"used for players 5 and 6.",
 					NULL
 				};
 				return desc_native_si;
@@ -1286,7 +1280,10 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 			if (ctx->settings.posX < NIN_CFG_BIT_LAST)
 			{
 				// Standard boolean setting.
-				if (ctx->settings.posX == NIN_CFG_BIT_USB) {
+				if (ctx->settings.posX == NIN_CFG_BIT_CHEATS
+					|| ctx->settings.posX == NIN_CFG_BIT_CHEAT_PATH) {
+					// Disabled by triples.
+				} else if (ctx->settings.posX == NIN_CFG_BIT_USB) {
 					// USB option is replaced with Wii U widescreen.
 					ncfg->Config ^= NIN_CFG_WIIU_WIDE;
 				} else {
@@ -1298,10 +1295,12 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 				case NIN_SETTINGS_MAX_PADS:
 					// Maximum native controllers.
 					// Not available on Wii U.
+					/*
 					ncfg->MaxPads++;
 					if (ncfg->MaxPads > NIN_CFG_MAXPAD) {
 						ncfg->MaxPads = 0;
 					}
+					*/
 					break;
 
 				case NIN_SETTINGS_LANGUAGE:
@@ -1387,16 +1386,20 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 
 				case 3:
 					// Triforce Arcade Mode.
+					/*
 					ctx->saveSettings = true;
 					ncfg->Config ^= (NIN_CFG_ARCADE_MODE);
 					ctx->redraw = true;
+					*/
 					break;
 
 				case 4:
 					// Wiimote CC Rumble
+					/*
 					ctx->saveSettings = true;
 					ncfg->Config ^= (NIN_CFG_CC_RUMBLE);
 					ctx->redraw = true;
+					*/
 					break;
 
 				case 5:
@@ -1408,17 +1411,21 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 
 				case 6:
 					// BBA Emulation
+					/*
 					ctx->saveSettings = true;
 					ncfg->Config ^= (NIN_CFG_BBA_EMU);
 					ctx->redraw = true;
+					*/
 					break;
 
 				case 7:
 					// BBA Network Profile
+					/*
 					ctx->saveSettings = true;
 					ncfg->NetworkProfile++;
 					ncfg->NetworkProfile &= 3;
 					ctx->redraw = true;
+					*/
 					break;
 
 				case 8:
@@ -1459,6 +1466,14 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 					// These options are only available on Wii.
 					item_color = DARK_GRAY;
 				}
+
+				// Options disabled by triples.
+				switch (ListLoopIndex) {
+				case NIN_CFG_BIT_CHEATS:
+				case NIN_CFG_BIT_CHEAT_PATH:
+					item_color = DARK_GRAY;
+				}
+
 				PrintFormat(MENU_SIZE, item_color, MENU_POS_X+50, SettingY(ListLoopIndex),
 					    "%-18s:%s", OptionStrings[ListLoopIndex], (ncfg->Config & (1 << ListLoopIndex)) ? "On " : "Off" );
 			}
@@ -1467,7 +1482,7 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 		// Maximum number of emulated controllers.
 		// Not available on Wii U.
 		// TODO: Disable on RVL-101?
-		PrintFormat(MENU_SIZE, (!IsWiiU() ? BLACK : DARK_GRAY), MENU_POS_X+50, SettingY(ListLoopIndex),
+		PrintFormat(MENU_SIZE, DARK_GRAY, MENU_POS_X+50, SettingY(ListLoopIndex),
 			    "%-18s:%d", OptionStrings[ListLoopIndex], (ncfg->MaxPads));
 		ListLoopIndex++;
 
@@ -1587,12 +1602,12 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 		ListLoopIndex++;
 
 		// Triforce Arcade Mode.
-		PrintFormat(MENU_SIZE, BLACK, MENU_POS_X + 320, SettingY(ListLoopIndex),
+		PrintFormat(MENU_SIZE, DARK_GRAY, MENU_POS_X + 320, SettingY(ListLoopIndex),
 			    "%-18s:%-4s", "TRI Arcade Mode", (ncfg->Config & (NIN_CFG_ARCADE_MODE)) ? "On " : "Off");
 		ListLoopIndex++;
 
 		// Wiimote CC Rumble
-		PrintFormat(MENU_SIZE, BLACK, MENU_POS_X + 320, SettingY(ListLoopIndex),
+		PrintFormat(MENU_SIZE, DARK_GRAY, MENU_POS_X + 320, SettingY(ListLoopIndex),
 			    "%-18s:%-4s", "Wiimote CC Rumble", (ncfg->Config & (NIN_CFG_CC_RUMBLE)) ? "On " : "Off");
 		ListLoopIndex++;
 
@@ -1602,7 +1617,7 @@ static bool UpdateSettingsMenu(MenuCtx *ctx)
 		ListLoopIndex++;
 
 		// BBA Emulation
-		PrintFormat(MENU_SIZE, BLACK, MENU_POS_X + 320, SettingY(ListLoopIndex),
+		PrintFormat(MENU_SIZE, DARK_GRAY, MENU_POS_X + 320, SettingY(ListLoopIndex),
 			    "%-18s:%-4s", "BBA Emulation", (ncfg->Config & (NIN_CFG_BBA_EMU)) ? "On" : "Off");
 		ListLoopIndex++;
 

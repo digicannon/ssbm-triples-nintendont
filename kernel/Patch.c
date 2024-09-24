@@ -49,7 +49,7 @@ u32 TITLE_ID = 0;
 #define PATCH_OFFSET_ENTRY PATCH_OFFSET_START - FakeEntryLoad_size
 static u32 POffset = PATCH_OFFSET_ENTRY;
 vu32 useipl = 0, useipltri = 0;
-vu32 DisableSIPatch = 0, DisableEXIPatch = 0, bbaEmuWanted = 0;
+vu32 DisableSIPatch = 1, DisableEXIPatch = 0, bbaEmuWanted = 0;
 extern vu32 TRIGame;
 extern vu16 SOCurrentTotalFDs;
 
@@ -1676,7 +1676,7 @@ void DoPatches( char *Buffer, u32 Length, u32 DiscOffset )
 		}
 	}
 	DisableEXIPatch = (TRIGame == TRI_NONE && ConfigGetConfig(NIN_CFG_MEMCARDEMU) == false);
-	DisableSIPatch = (!IsWiiU());
+	//DisableSIPatch = (!IsWiiU());
 
 	bool PatchWide = ConfigGetConfig(NIN_CFG_FORCE_WIDE);
 	if(PatchWide && PatchStaticWidescreen(TITLE_ID, GAME_ID & 0xFF)) //if further patching is needed
