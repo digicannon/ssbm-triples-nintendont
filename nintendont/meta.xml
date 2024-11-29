@@ -2,8 +2,8 @@
 <app version="1">
 	<name>SSBM Triples Nintendont</name>
 	<coder>FIX94, crediar, Digital Cannon</coder>
-	<version>0.4.1</version>
-	<release_date>20240924000000</release_date>
+	<version>0.4.2</version>
+	<release_date>20241128000000</release_date>
 	<short_description>SSBM Triples</short_description>
 	<long_description>A fork of Nintendont to play SSBM Triples.</long_description>
 	<no_ios_reload/>
