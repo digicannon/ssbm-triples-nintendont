@@ -34,8 +34,9 @@ extern bool wiiVCInternal;
 u32 ISOFileOpen = 0;
 
 #define CACHE_MAX		0x400
-#define CACHE_START		(u8*)0x11000000
-#define CACHE_SIZE		0x1E80000
+// Triples: ARAM is 24MB, so memcard/cache start 8MB later.
+#define CACHE_START		(u8*)0x11800000
+#define CACHE_SIZE		0x1680000
 
 typedef struct
 {

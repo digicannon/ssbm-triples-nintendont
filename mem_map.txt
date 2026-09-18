@@ -6,8 +6,8 @@ MEM1
 0x00002F60=old memory card interface
 
 MEM2
-0x90000000-0x91000000=aram
-0x91000000-0x92000000=memcard emu - end point depends on memcard size
+0x90000000-0x91800000=aram (24MB for Triples)
+0x91800000-0x92000000=memcard emu - end point depends on memcard size
 0x92000000-0x92E80000=cache - start point depends on memcard size end point depends on Triforce
 0x92B80000-0x92E80000=(In Triforce mode this is reserved for DIMM memory)
 0x92E80000-0x92F00000=temporary di buffer (Also used by Patch code when processing DSP)

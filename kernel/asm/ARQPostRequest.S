@@ -42,7 +42,7 @@ ARQPostRequest:
 	bne		MRAM_TO_ARAM
 
 ARAM_TO_MRAM:
-	rlwinm	r7,	r7,	0,		8,		26 # 0x00ffffe0
+	rlwinm	r7,	r7,	0,		7,		26 # 0x01ffffe0 (24MB ARAM for Triples)
 	oris	r7,	r7,	0x9000
 
 	rlwinm	r8,	r8,	0,		7,		26 # 0x01ffffe0
@@ -54,7 +54,7 @@ MRAM_TO_ARAM:
 	rlwinm	r7,	r7,	0,		7,		26 # 0x01ffffe0
 	oris	r7,	r7,	0x8000
 
-	rlwinm	r8,	r8,	0,		8,		26 # 0x00ffffe0
+	rlwinm	r8,	r8,	0,		7,		26 # 0x01ffffe0 (24MB ARAM for Triples)
 	oris	r8,	r8,	0x9000
 
 DCInvalidateRange:

@@ -20,8 +20,8 @@ __ARHandler:
 
 	#add length onto ARAM address to see max
 	add		r0,	r5,	r6
-	#ARAM Max Address to ensure no overwriting 
-	lis		r7,	0x9100
+	#ARAM Max Address to ensure no overwriting (24MB for Triples)
+	lis		r7,	0x9180
 	cmplw	r0,	r7
 	#Fine as is, continue
 	ble		checkLength

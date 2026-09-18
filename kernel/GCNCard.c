@@ -10,7 +10,7 @@
 extern vu32 TRIGame;
 
 // Memory Card context.
-static u8 *const GCNCard_base = (u8*)(0x11000000);
+static u8 *const GCNCard_base = (u8*)(0x11800000); // Triples: after 24MB ARAM.
 
 typedef struct _GCNCard_ctx {
 	char filename[0x20];    // Memory Card filename.
