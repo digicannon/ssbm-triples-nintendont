@@ -3851,9 +3851,6 @@ void DoPatches( char *Buffer, u32 Length, u32 DiscOffset )
 
 	// Triples patches.
 	if (is_melee102()) {
-		// Boot to CSS.
-		write32(0x001BFA20, 0x38600002);
-
 		const u32 triples_widescreen_enabled = 0x3FC700;
 		if (ConfigGetConfig(NIN_CFG_FORCE_WIDE)) {
 			// Write triples global to enable widescreen.

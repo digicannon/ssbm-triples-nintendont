@@ -91,8 +91,8 @@ int GCNCard_Load(int slot)
 	// Set up the Memory Card context.
 	GCNCard_ctx *const ctx = &memCard[slot];
 	GCNCard_InitCtx(ctx);
-	memcpy(ctx->filename, "/saves/", 7);
-	char *fname_ptr = &ctx->filename[7];
+	memcpy(ctx->filename, "/triples_saves/", 15);
+	char *fname_ptr = &ctx->filename[15];
 	if (ConfigGetConfig(NIN_CFG_MC_MULTI))
 	{
 		// "Multi" mode enabled. (one card for all saves, per region)

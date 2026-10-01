@@ -26,21 +26,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ff_utf8.h"
 #include "wdvd.h"
 
-static const char CARD_NAME_GP1[] = "/saves/GP1.bin";
-static const char CARD_NAME_GP2[] = "/saves/GP2.bin";
-static const char CARD_NAME_GP2J[] = "/saves/GP2J.bin";
-static const char CARD_NAME_AX[] = "/saves/AX.bin";
+static const char CARD_NAME_GP1[] = "/triples_saves/GP1.bin";
+static const char CARD_NAME_GP2[] = "/triples_saves/GP2.bin";
+static const char CARD_NAME_GP2J[] = "/triples_saves/GP2J.bin";
+static const char CARD_NAME_AX[] = "/triples_saves/AX.bin";
 
-static const char SETTINGS_AX_RVC[] = "/saves/AX_RVCsettings.bin";
-static const char SETTINGS_AX_RVD[] = "/saves/AX_RVDsettings.bin";
-static const char SETTINGS_AX_RVE[] = "/saves/AX_RVEsettings.bin";
-static const char SETTINGS_YAKRVB[] = "/saves/YAKRVBsettings.bin";
-static const char SETTINGS_YAKRVC[] = "/saves/YAKRVCsettings.bin";
-static const char SETTINGS_VS3V02[] = "/saves/VS3V02settings.bin";
-static const char SETTINGS_VS4JAP[] = "/saves/VS4JAPsettings.bin";
-static const char SETTINGS_VS4EXP[] = "/saves/VS4EXPsettings.bin";
-static const char SETTINGS_VS4V06JAP[] = "/saves/VS4V06JAPsettings.bin";
-static const char SETTINGS_VS4V06EXP[] = "/saves/VS4V06EXPsettings.bin";
+static const char SETTINGS_AX_RVC[] = "/triples_saves/AX_RVCsettings.bin";
+static const char SETTINGS_AX_RVD[] = "/triples_saves/AX_RVDsettings.bin";
+static const char SETTINGS_AX_RVE[] = "/triples_saves/AX_RVEsettings.bin";
+static const char SETTINGS_YAKRVB[] = "/triples_saves/YAKRVBsettings.bin";
+static const char SETTINGS_YAKRVC[] = "/triples_saves/YAKRVCsettings.bin";
+static const char SETTINGS_VS3V02[] = "/triples_saves/VS3V02settings.bin";
+static const char SETTINGS_VS4JAP[] = "/triples_saves/VS4JAPsettings.bin";
+static const char SETTINGS_VS4EXP[] = "/triples_saves/VS4EXPsettings.bin";
+static const char SETTINGS_VS4V06JAP[] = "/triples_saves/VS4V06JAPsettings.bin";
+static const char SETTINGS_VS4V06EXP[] = "/triples_saves/VS4V06EXPsettings.bin";
 
 extern bool wiiVCInternal;
 

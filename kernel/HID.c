@@ -63,6 +63,8 @@ static u8 *RawRumbleDataOff = NULL;
 static u32 RawRumbleDataLen = 0;
 static u32 RumbleTransferLen = 0;
 static u32 RumbleTransfers = 0;
+// Triples writes the adapter's rumble mask here for P5/P6; PADReadGC clobbers 0x13003020.
+vu32 MotorCommand = 0x13003028;
 
 static const unsigned char rawData[] =
 {
@@ -581,6 +583,7 @@ s32 HIDOpen( u32 LoaderRequest )
 				{
 					HIDRumble = HIDGCRumble;
 					RumbleEnabled = true;
+					write32(MotorCommand, 0);
 				}
 				else if(RumbleEnabled)
 				{
@@ -769,7 +772,6 @@ void HIDPS3SetRumble( u8 duration_right, u8 power_right, u8 duration_left, u8 po
 }
 
 vu32 HIDRumbleCurrent = 0, HIDRumbleLast = 0;
-vu32 MotorCommand = 0x13003020;
 void HIDPS3Read()
 {
 	if( !PS3LedSet && Packet[4] )

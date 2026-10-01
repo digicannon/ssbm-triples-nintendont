@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "global.h"
 #include "FPad.h"
 #include "Config.h"
-#include "update.h"
 #include "titles.h"
 #include "dip.h"
 #include <stdio.h>
@@ -1102,13 +1101,6 @@ static const char *const *GetSettingsDescription(const MenuCtx *ctx)
  */
 static bool UpdateSettingsMenu(MenuCtx *ctx)
 {
-	if(FPAD_X(0))
-	{
-		// Start the updater.
-		UpdateNintendont();
-		ctx->redraw = 1;
-	}
-
 	if (FPAD_Down_Repeat(ctx))
 	{
 		// Down: Move the cursor down by 1 setting.
@@ -1828,7 +1820,7 @@ static int SelectGame(void)
 			else
 			{
 				// Settings menu.
-				PrintButtonActions("Go Back", "Select", "Settings", "Update");
+				PrintButtonActions("Go Back", "Select", "Settings", NULL);
 			}
 
 			if (ctx.menuMode == 0 ||
@@ -1978,7 +1970,7 @@ void ShowMessageScreenAndExit(const char *msg, int ret)
 void PrintInfo(void)
 {
 	const char *consoleType = (isWiiVC ? (IsWiiUFastCPU() ? "WiiVC 5x CPU" : "Wii VC") : (IsWiiUFastCPU() ? "WiiU 5x CPU" : (IsWiiU() ? "Wii U" : "Wii")));
-	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*0, "SSBM Triples v0.5.0");
+	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*0, "SSBM Triples v0.5.1");
 	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*1, "Built   : " __DATE__ " " __TIME__);
 	PrintFormat(DEFAULT_SIZE, BLACK, MENU_POS_X, MENU_POS_Y + 20*2, "Firmware: %s %u.%u.%u",
 		    consoleType, *(vu16*)0x80003140, *(vu8*)0x80003142, *(vu8*)0x80003143);

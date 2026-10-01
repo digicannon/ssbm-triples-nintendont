@@ -82,11 +82,11 @@ void GCAMInit( void )
 	STRInit = 0;
 }
 
-static const char *CARD_NAME_GP1 = "/saves/GP1.bin";
-static const char *CARD_NAME_GP2 = "/saves/GP2.bin";
-static const char *CARD_NAME_GP2J = "/saves/GP2J.bin";
-static const char *CARD_NAME_AX = "/saves/AX.bin";
-static const char *CARD_NAME_VS4 = "/saves/VS4.bin";
+static const char *CARD_NAME_GP1 = "/triples_saves/GP1.bin";
+static const char *CARD_NAME_GP2 = "/triples_saves/GP2.bin";
+static const char *CARD_NAME_GP2J = "/triples_saves/GP2J.bin";
+static const char *CARD_NAME_AX = "/triples_saves/AX.bin";
+static const char *CARD_NAME_VS4 = "/triples_saves/VS4.bin";
 static const char *CARD_NAME_DEF = "csave.bin";
 
 const char *GCAMGetCARDName()

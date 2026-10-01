@@ -28,6 +28,7 @@ MEM2
 
 0x93003020=padread hid motor
 0x93003024=padread game setting
+0x93003028=triples adapter motor (P5/P6)
 0x93003040-0x93003050=padread bt motor
 0x93003050-0x93003060=padread bt channel free
 0x93003060-0x93003064=SIInited

@@ -49,6 +49,8 @@ LIBDIRS	= $(CURDIR)/extlibs
 # NOTE: FatFS doesn't use the standard [component]/lib structure,
 # so we'll add a -L ourselves.
 LDFLAGS	+= -L$(CURDIR)/../../fatfs
+# Set by Build.sh to link against a private libogc 2.x.
+LDFLAGS	+= $(LIBOGC_LDFLAGS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
